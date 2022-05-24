@@ -17,6 +17,7 @@ async function run() {
         await client.connect();
         const productsCollection = client.db('manufacturer-project').collection('products')
         const purchaseCollection = client.db('manufacturer-project').collection('purchaseInfo')
+        const userCollection = client.db('manufacturer-project').collection('users')
 
         app.get('/products', async (req, res) => {
             const query = {}
@@ -51,6 +52,27 @@ async function run() {
             console.log(filter)
             const result = await purchaseCollection.deleteOne(filter)
             res.send(result)
+        })
+
+        app.get('/users/:email',async(req,res)=>{
+            const email = req.params.email;
+            const filter = {userEmail:email}
+            const result = await userCollection.findOne(filter)
+            res.send(result)
+        })
+
+        app.put('/users/:email', async (req, res) => {
+            const email = req.params.email;
+            const user = req.body;
+            const filter = { userEmail: email }
+            const options = { upsert: true };
+            const updateDoc = {
+                $set: user
+            };
+            const result = await userCollection.updateOne(filter, updateDoc,options);
+            res.send(result)
+
+
         })
 
     }
