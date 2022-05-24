@@ -25,19 +25,31 @@ async function run() {
             res.send(result)
         })
 
-        app.get('/products/:id',async(req,res)=>{
+        app.get('/products/:id', async (req, res) => {
             const id = req.params
-            console.log(req.params,'id')
-            const query = {_id:(ObjectId(id))}
+            const query = { _id: (ObjectId(id)) }
             const result = await productsCollection.findOne(query)
             res.send(result)
         })
 
+        app.get('/orders', async (req, res) => {
+            const query = {}
+            const cursor = purchaseCollection.find(query)
+            const result = await cursor.toArray()
+            res.send(result)
+        })
 
-        app.post('/orders',async(req,res)=>{
+        app.post('/orders', async (req, res) => {
             const order = req.body;
-            console.log(order)
             const result = await purchaseCollection.insertOne(order)
+            res.send(result)
+        })
+
+        app.delete('/orders/:id', async (req, res) => {
+            const id = req.params.id
+            const filter = { _id: (ObjectId(id)) }
+            console.log(filter)
+            const result = await purchaseCollection.deleteOne(filter)
             res.send(result)
         })
 
