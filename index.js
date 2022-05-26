@@ -21,6 +21,7 @@ async function run() {
         const purchaseCollection = client.db('manufacturer-project').collection('purchaseInfo')
         const userCollection = client.db('manufacturer-project').collection('users')
         const reviewCollection = client.db('manufacturer-project').collection('reviews')
+        const paymentCollection = client.db('manufacturer-project').collection('payment')
 
         app.get('/products', async (req, res) => {
             const query = {}
@@ -36,8 +37,9 @@ async function run() {
             res.send(result)
         })
 
-        app.get('/orders', async (req, res) => {
-            const query = {}
+        app.get('/orders/:email', async (req, res) => {
+            const email = req.params.email
+            const query = {email:email}
             const cursor = purchaseCollection.find(query)
             const result = await cursor.toArray()
             res.send(result)
@@ -112,6 +114,22 @@ async function run() {
             res.send({
                 clientSecret: paymentIntent.client_secret
             });
+        })
+
+        // update payment by id
+        app.patch('/orders/:id',async(req,res)=>{
+            const id = req.params.id;
+            const payment = req.body;
+            const filter = {_id:(ObjectId(id))}
+            const updateDoc = {
+                $set: {
+                    paid:true,
+                    transactionId:payment.transactionId
+                }
+            };
+            const result = await paymentCollection.insertOne(payment)
+            const updatedOrders = await purchaseCollection.updateOne(filter,updateDoc);
+            res.send(updatedOrders)
         })
 
 
