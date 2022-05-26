@@ -132,6 +132,26 @@ async function run() {
             res.send(updatedOrders)
         })
 
+        // get all users
+        app.get('/users',async(req,res)=>{
+            const query = {}
+            const cursor =  userCollection.find(query)
+            const result = await cursor.toArray()
+            res.send(result)
+        })
+
+        app.get('/users/admin/:email',async(req,res)=>{
+            const email = req.params.email;
+            console.log(email)
+            const filter = { userEmail: email }
+            const updateDoc = {
+                $set:{role:'admin'}
+            };
+            const result = await userCollection.updateOne(filter, updateDoc);
+            res.send(result)
+
+        })
+
 
     }
     finally { }
