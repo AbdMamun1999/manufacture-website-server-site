@@ -46,7 +46,7 @@ async function run() {
         const verifyAdmin = async (req, res, next) => {
             const requester = req.decoded.email
             const requseterAccount = await userCollection.findOne({ email: requester })
-            if (requseterAccount === 'admin') {
+            if (requseterAccount.role === 'admin') {
                 next()
             } else {
                 res.status(403).send({ message: 'Forbiden' })
@@ -137,7 +137,7 @@ async function run() {
         })
 
         //create-payment-intent 
-        app.post('/create-payment-intent',verifyJWT ,async (req, res) => {
+        app.post('/create-payment-intent', verifyJWT, async (req, res) => {
             const service = req.body
             const price = service.purchasePrice
             console.log(price, 'payment price')
@@ -164,7 +164,7 @@ async function run() {
                 $set: {
                     paid: true,
                     transactionId: payment.transactionId,
-                    status:'pending'
+                    status: 'pending'
                 }
             };
             const result = await paymentCollection.insertOne(payment)
@@ -182,7 +182,7 @@ async function run() {
         })
 
         // check admin for useAdmin
-        app.get('/admin/:email',async (req, res) => {
+        app.get('/admin/:email', async (req, res) => {
             const email = req.params.email;
             const filter = { email: email }
             const user = await userCollection.findOne(filter)
@@ -191,43 +191,59 @@ async function run() {
         })
 
         // create admin
-        app.put('/users/admin/:email', verifyJWT, verifyAdmin, async (req, res) => {
+        app.put('/users/admin/:email', verifyJWT,verifyAdmin, async (req, res) => {
             const email = req.params.email;
             const filter = { userEmail: email }
+            /*   const requester = req.decoded.email
+              console.log(requester)
+              const requseterAccount = await userCollection.findOne({ email: requester })
+              console.log(requester)
+              if (requseterAccount.role === 'admin') { */
             const updateDoc = {
                 $set: { role: 'admin' }
             };
             const result = await userCollection.updateOne(filter, updateDoc);
             res.send(result)
-
+            /*  } else {
+                 res.status(403).send({ message: 'Forbiden' })
+             } */
 
         })
 
-        // post data admin
-        app.post('/product', verifyJWT, async (req, res) => {
+        // post product for added a product page
+        app.post('/product', verifyJWT,verifyAdmin, async (req, res) => {
             const product = req.body;
-            const result = await productForCollection.insertOne(product)
+            const result = await productsCollection.insertOne(product)
             res.send(result)
         })
 
         // get All orders for manage all order page
-        app.get('/allorders',async(req,res)=>{
+        app.get('/allorders', async (req, res) => {
             const query = {}
             const cursor = purchaseCollection.find(query)
             const result = await cursor.toArray()
             res.send(result)
         })
         // get manage all order update status
-        app.put('/allorders/:id',async(req,res)=>{
+        app.put('/allorders/:id',verifyJWT,verifyAdmin, async (req, res) => {
             const id = req.params.id
-            const filter = {_id:(ObjectId(id))}
+            const filter = { _id: (ObjectId(id)) }
             const options = { upsert: true };
             const updateDoc = {
                 $set: {
-                    status:'Shift'
+                    status: 'Shift'
                 }
             };
             const result = await purchaseCollection.updateOne(filter, updateDoc, options);
+            res.send(result)
+        })
+
+        // delete single product for manage product page
+        app.delete('/allproducts/:id',verifyJWT,verifyAdmin,async (req, res) => {
+            const id = req.params.id
+            const filter = { _id: (ObjectId(id)) }
+            console.log(filter)
+            const result = await productsCollection.deleteOne(filter)
             res.send(result)
         })
 
