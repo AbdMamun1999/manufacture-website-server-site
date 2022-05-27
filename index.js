@@ -163,7 +163,8 @@ async function run() {
             const updateDoc = {
                 $set: {
                     paid: true,
-                    transactionId: payment.transactionId
+                    transactionId: payment.transactionId,
+                    status:'pending'
                 }
             };
             const result = await paymentCollection.insertOne(payment)
@@ -206,6 +207,27 @@ async function run() {
         app.post('/product', verifyJWT, async (req, res) => {
             const product = req.body;
             const result = await productForCollection.insertOne(product)
+            res.send(result)
+        })
+
+        // get All orders for manage all order page
+        app.get('/allorders',async(req,res)=>{
+            const query = {}
+            const cursor = purchaseCollection.find(query)
+            const result = await cursor.toArray()
+            res.send(result)
+        })
+        // get manage all order update status
+        app.put('/allorders/:id',async(req,res)=>{
+            const id = req.params.id
+            const filter = {_id:(ObjectId(id))}
+            const options = { upsert: true };
+            const updateDoc = {
+                $set: {
+                    status:'Shift'
+                }
+            };
+            const result = await purchaseCollection.updateOne(filter, updateDoc, options);
             res.send(result)
         })
 
