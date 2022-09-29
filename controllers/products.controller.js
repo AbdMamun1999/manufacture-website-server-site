@@ -1,4 +1,9 @@
-const { getAllProductsService } = require("../services/products.service");
+const ObjectId = require("mongoose").Types.ObjectId;
+const {
+  getAllProductsService,
+  saveASingleProductService,
+  getProductByIdService,
+} = require("../services/products.service");
 
 exports.getAllProducts = async (req, res, next) => {
   try {
@@ -32,6 +37,52 @@ exports.getAllProducts = async (req, res, next) => {
     res.status(400).send({
       status: false,
       message: "Data can't get.Something went wrong",
+      error: error.message,
+    });
+  }
+};
+
+exports.saveASingleProduct = async (req, res, next) => {
+  try {
+    const result = await saveASingleProductService(req.body);
+    await result.save();
+
+    res.status(201).send({
+      status: true,
+      message: "Product save successfull",
+      data: result,
+    });
+  } catch (error) {
+    res.status(403).send({
+      status: false,
+      message: "Product can not save.Something went wrong",
+      error: error.message,
+    });
+  }
+};
+
+exports.getProductById = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+
+    if (!ObjectId.isValid(id)) {
+      res.status(400).send({
+        status: false,
+        error: `${id} is not valid`,
+      });
+    }
+
+    const product =await getProductByIdService(id);
+
+    res.status(200).json({
+      status: true,
+      message: "Successfully get the products",
+      data: product,
+    });
+  } catch (error) {
+    res.status(400).send({
+      status: false,
+      message: "Can not get the product.Something went wrong!",
       error: error.message,
     });
   }

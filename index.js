@@ -6,6 +6,7 @@ var jwt = require('jsonwebtoken');
 const errorHandler = require('./middlewares/errorHandler');
 const dbConnection = require('./utils/dbConnect');
 const verifyJWT = require('./middlewares/verifyJWT');
+const productsRouter = require('./routes/v1/products.route');
 
 require('dotenv').config()
 const stripe = require("stripe")(`${process.env.STRIPE_SECRET_KEY}`);
@@ -31,9 +32,8 @@ app.use(express.json())
         next();
     })
 } */
-console.log(verifyJWT())
 
-console.log(dbConnection())
+dbConnection()
 
 // const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 // const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.y4d5u.mongodb.net/?retryWrites=true&w=majority`;
@@ -260,6 +260,9 @@ console.log(dbConnection())
 //     finally { }
 // }
 // run().catch(console.dir)
+
+
+app.use('/products',productsRouter)
 
 app.get('/', (req, res) => {
     res.send('manufacturer server')

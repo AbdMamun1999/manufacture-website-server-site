@@ -1,0 +1,38 @@
+[
+  {
+    "img": "https://i.ibb.co/d7pcQjH/61ae3-VS81i-L-AC-SX466-PIbundle-4-Top-Right-0-0-SH20-1.jpg",
+    "name": "CRAFTSMAN Tape Measure, Easy Grip, 30-Foot (CMHT37470S)",
+    "available_quantity": 50000,
+    "price": 20,
+    "minimum_quantity": 2000,
+    "details": {
+      "brand": "Craftsman",
+      "style": "Hammer 16 oz",
+      "weigth": "16 Ounces",
+      "material": "Steel, fiberglass"
+    },
+    "about": [
+      "Durability: overstrike protection where fiberglass handles are most prone to break",
+      "Improved grip during use: over mold grip",
+      "Driving and pulling nails"
+    ]
+  },
+  {
+    "img": "https://i.ibb.co/2Yy0SN9/images-1.jpg",
+    "name": "CRAFTSMAN VISE-GRIP Adjustable Crescent Wrench, 10-Inch (2078610)",
+    "available_quantity": 50000,
+    "price": 22,
+    "minimum_quantity": 2000,
+    "details": {
+      "brand": "Craftsman",
+      "style": "Hammer 16 oz",
+      "weigth": "16 Ounces",
+      "material": "Steel, fiberglass"
+    },
+    "about": [
+      "Durability: overstrike protection where fiberglass handles are most prone to break",
+      "Improved grip during use: over mold grip",
+      "Driving and pulling nails"
+    ]
+  }
+]
