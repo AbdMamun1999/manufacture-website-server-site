@@ -12,6 +12,7 @@ const productsRouter = require("./routes/v1/products.route");
 
 // user router
 const userRouter = require("./routes/v1/users.route");
+const ordersRouter = require("./routes/v1/orders.route");
 
 require("dotenv").config();
 const stripe = require("stripe")(`${process.env.STRIPE_SECRET_KEY}`);
@@ -109,8 +110,7 @@ dbConnection();
 //             res.send(result)
 //         })
 
-
-            // done
+// done
 //         app.put('/users/:email', async (req, res) => {
 //             const email = req.params.email;
 //             console.log(email, 'email verify')
@@ -266,6 +266,9 @@ app.use("/products", productsRouter);
 
 // user route
 app.use("/users", userRouter);
+
+// order route
+app.use("/orders", ordersRouter);
 
 app.get("/", (req, res) => {
   res.send("manufacturer server");
