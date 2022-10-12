@@ -9,10 +9,9 @@ const verifyJWT = require("./middlewares/verifyJWT");
 
 // product router
 const productsRouter = require("./routes/v1/products.route");
-
-// user router
 const userRouter = require("./routes/v1/users.route");
 const ordersRouter = require("./routes/v1/orders.route");
+const reviewRouter = require("./routes/v1/reviews.route");
 
 require("dotenv").config();
 const stripe = require("stripe")(`${process.env.STRIPE_SECRET_KEY}`);
@@ -64,7 +63,7 @@ dbConnection();
 //             }
 //         }
 
-            // done
+// done
 //         app.get('/products', async (req, res) => {
 //             const query = {}
 //             const cursor = productsCollection.find(query)
@@ -72,7 +71,7 @@ dbConnection();
 //             res.send(result)
 //         })
 
-            // done
+// done
 //         app.get('/products/:id', verifyJWT, async (req, res) => {
 //             const id = req.params.id
 //             const query = { _id: (ObjectId(id)) }
@@ -80,7 +79,7 @@ dbConnection();
 //             res.send(result)
 //         })
 
-            // done
+// done
 //         app.get('/orders/:email', async (req, res) => {
 //             console.log(req.params)
 //             const email = req.params.email;
@@ -90,13 +89,13 @@ dbConnection();
 //             res.send(result)
 //         })
 
-          // done
+// done
 //         app.post('/orders', async (req, res) => {
 //             const order = req.body;
 //             const result = await purchaseCollection.insertOne(order)
 //             res.send(result)
 //         })
-          // done
+// done
 //         app.delete('/orders/:id', async (req, res) => {
 //             const id = req.params.id
 //             const filter = { _id: (ObjectId(id)) }
@@ -104,7 +103,7 @@ dbConnection();
 //             const result = await purchaseCollection.deleteOne(filter)
 //             res.send(result)
 //         })
-          // done
+// done
 //         app.get('/users/:email', async (req, res) => {
 //             const email = req.params.email;
 //             const filter = { userEmail: email }
@@ -112,7 +111,7 @@ dbConnection();
 //             res.send(result)
 //         })
 
-        // done
+// done
 //         app.put('/users/:email', async (req, res) => {
 //             const email = req.params.email;
 //             console.log(email, 'email verify')
@@ -265,16 +264,15 @@ dbConnection();
 
 // product route
 app.use("/products", productsRouter);
-
-// user route
 app.use("/users", userRouter);
-
-// order route
 app.use("/orders", ordersRouter);
+app.use("/reviews", reviewRouter);
 
 app.get("/", (req, res) => {
   res.send("manufacturer server");
 });
+
+
 
 // global Error Handler
 app.use(errorHandler);
