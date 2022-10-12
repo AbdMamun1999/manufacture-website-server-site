@@ -15,7 +15,6 @@ const reviesSchema = mongoose.Schema(
       type: String,
       require: [true, "Email is required"],
       trim: true,
-      unique: true,
       lowercase: true,
       validate: [validator.isEmail, "Please provide a valid email"],
     },
