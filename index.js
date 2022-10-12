@@ -64,7 +64,7 @@ dbConnection();
 //             }
 //         }
 
-// done
+            // done
 //         app.get('/products', async (req, res) => {
 //             const query = {}
 //             const cursor = productsCollection.find(query)
@@ -72,7 +72,7 @@ dbConnection();
 //             res.send(result)
 //         })
 
-// done
+            // done
 //         app.get('/products/:id', verifyJWT, async (req, res) => {
 //             const id = req.params.id
 //             const query = { _id: (ObjectId(id)) }
@@ -80,6 +80,7 @@ dbConnection();
 //             res.send(result)
 //         })
 
+            // done
 //         app.get('/orders/:email', async (req, res) => {
 //             console.log(req.params)
 //             const email = req.params.email;
@@ -89,6 +90,7 @@ dbConnection();
 //             res.send(result)
 //         })
 
+          // done
 //         app.post('/orders', async (req, res) => {
 //             const order = req.body;
 //             const result = await purchaseCollection.insertOne(order)
@@ -110,7 +112,7 @@ dbConnection();
 //             res.send(result)
 //         })
 
-// done
+        // done
 //         app.put('/users/:email', async (req, res) => {
 //             const email = req.params.email;
 //             console.log(email, 'email verify')
