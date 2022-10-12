@@ -96,7 +96,7 @@ dbConnection();
 //             const result = await purchaseCollection.insertOne(order)
 //             res.send(result)
 //         })
-
+          // done
 //         app.delete('/orders/:id', async (req, res) => {
 //             const id = req.params.id
 //             const filter = { _id: (ObjectId(id)) }
@@ -104,7 +104,7 @@ dbConnection();
 //             const result = await purchaseCollection.deleteOne(filter)
 //             res.send(result)
 //         })
-
+          // done
 //         app.get('/users/:email', async (req, res) => {
 //             const email = req.params.email;
 //             const filter = { userEmail: email }
